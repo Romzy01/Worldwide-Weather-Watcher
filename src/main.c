@@ -1,3 +1,4 @@
+// TEST GITHUB : verification du commit et du push
 #include <stdio.h>
 #include "setup.h"
 #include "cesi_types.h"
