@@ -1,20 +1,31 @@
-#include <stdio.h>
-#include "setup.h"
-#include "cesi_types.h"
-#include "grove_rgb.h"
-#include "grove_button.h"
+
+#include "stm32l4xx_hal.h"
 #include "grove_light.h"
-#include "grove_rtc_ds1307.h"
-#include "grove_gps_air530z.h"
-#include "grove_bme680.h"
-#include "sd_logger.h"
+#include <stdio.h>
+
+extern void Global_Init(void);
 
 int main(void)
 {
     Global_Init();
 
+    GroveLight_Init();
+
+    printf("\r\n=== TEST LUMINOSITE ===\r\n");
+
     while (1)
     {
-        
+        uint16_t luminosite = GroveLight_ReadRaw();
+
+        if (luminosite == 0xFFFF)
+        {
+            printf("Erreur lecture capteur\r\n");
+        }
+        else
+        {
+            printf("Luminosite : %u\r\n", luminosite);
+        }
+
+        HAL_Delay(1000);
     }
 }
