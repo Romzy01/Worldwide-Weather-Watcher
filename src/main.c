@@ -1,20 +1,30 @@
-#include <stdio.h>
-#include "setup.h"
-#include "cesi_types.h"
-#include "grove_rgb.h"
-#include "grove_button.h"
-#include "grove_light.h"
-#include "grove_rtc_ds1307.h"
+
+#include "stm32l4xx_hal.h"
 #include "grove_gps_air530z.h"
-#include "grove_bme680.h"
-#include "sd_logger.h"
+#include <stdio.h>
+
+extern void Global_Init(void);
 
 int main(void)
 {
     Global_Init();
+    GroveGPS_Init();
+
+    char trame[128];
+
+    printf("\r\n=== TEST GPS AIR530Z ===\r\n");
 
     while (1)
     {
-        
+        if (GroveGPS_ReadLine(trame, sizeof(trame), 2000))
+        {
+            printf("GPS : %s\r\n", trame);
+        }
+        else
+        {
+            printf("Aucune donnee GPS recue\r\n");
+        }
+
+        HAL_Delay(200);
     }
 }
