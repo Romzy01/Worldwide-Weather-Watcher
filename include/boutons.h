@@ -15,7 +15,7 @@
  * bouton 1 = PA10 (D2), bouton 2 = PB3 (D3). À inverser ici si besoin.
  */
 #ifndef BOUTON_ROUGE_EST_BOUTON1
-#define BOUTON_ROUGE_EST_BOUTON1  1
+#define BOUTON_ROUGE_EST_BOUTON1  0
 #endif
 
 /*
