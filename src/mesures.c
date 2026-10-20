@@ -4,7 +4,7 @@
  *
  *          Déroulement d'un relevé :
  *            1. mesures_demarrer() lit la RTC et fait une première tentative
- *               sur le BME680 et le capteur de lumière ;
+ *               sur le BME280 et le capteur de lumière ;
  *            2. mesures_poursuivre(), à chaque tour de boucle, réessaie les
  *               capteurs muets toutes les 200 ms et attend une trame GGA
  *               récente, sans jamais bloquer ;
@@ -12,7 +12,7 @@
  *               et son compteur de timeouts augmente (erreur à partir de 2).
  */
 #include "mesures.h"
-#include "capteur_bme680.h"
+#include "capteur_bme280.h"
 #include "gps.h"
 #include "config.h"
 #include "grove_light.h"
@@ -46,7 +46,7 @@ void mesures_init(void)
     GroveLight_Init();
     gps_init();
     printf("  RTC DS1307 ............ %s\r\n", GroveRTC_Init() ? "OK" : "ABSENTE");
-    printf("  BME680 ................ %s\r\n", bme680_init() ? "OK" : "ABSENT");
+    printf("  BME280 ................ %s\r\n", bme280_init() ? "OK" : "ABSENT");
     printf("  Capteur de lumiere .... ADC PA4\r\n");
     printf("  GPS Air530Z ........... UART4 9600 bauds (sous interruption)\r\n");
 }
@@ -56,7 +56,7 @@ static void tenter_capteurs(void)
 {
     t_dernier_essai = HAL_GetTick();
 
-    if (!fini[CAPTEUR_ENV] && bme680_lire(&courant.env)) {
+    if (!fini[CAPTEUR_ENV] && bme280_lire(&courant.env)) {
         fini[CAPTEUR_ENV] = repondu[CAPTEUR_ENV] = true;
     }
     if (!fini[CAPTEUR_LUMIERE]) {

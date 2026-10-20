@@ -31,7 +31,7 @@ DWORD get_fattime(void)
 
 static void demonter(void)
 {
-    f_unmount(NULL,"",0);
+    f_mount(NULL,"",0);
     sd_spi_invalider();
     monte = false;
 }
@@ -92,7 +92,7 @@ static FRESULT archiver(const Mesures *m)
     char courant[16], archive[16];
     FILINFO info;
     nom_fichier(courant, m, 0);
-    for (unsigned n = 1; n < 1000; n++) {
+    for (unsigned n = 1; n <= 99; n++) {
         nom_fichier(archive, m, n);
         if (f_stat(archive, &info) == FR_NO_FILE) {
             printf("[SD] %s plein -> archive %s\r\n", courant, archive);

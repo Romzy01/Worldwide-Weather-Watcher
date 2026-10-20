@@ -13,7 +13,7 @@
 
 #define SD_SEPARATEUR      ';'
 #define SD_VALEUR_ABSENTE  "NA"
-#define SD_FORMAT_NOM      "%02u%02u%02u_%u.LOG"   /* AA, MM, JJ, révision */
+#define SD_FORMAT_NOM "%02u%02u%02u%02u.LOG"   /* AA, MM, JJ, révision */
 #define SD_ENTETE          "DATE HEURE;PRESSION_HPA;TEMP_AIR_C;HYGR_PCT;LUMIN;LATITUDE;LONGITUDE\r\n"
 
 /** Initialise la carte (SDLogger_Init + passage SPI rapide) et monte FatFs. */
