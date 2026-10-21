@@ -112,7 +112,7 @@ bool gps_analyser_gga(const char *trame, GPS_Data *gps)
         if (*p == ',') { n++; k = 0; continue; }
         if (k < 15) champs[n][k++] = *p;
     }
-    if (n < 7) return false;
+    if (n < 8) return false;
 
     /* champs : 0 $GPGGA, 1 heure, 2 lat, 3 N/S, 4 lon, 5 E/W, 6 fix, 7 satellites */
     gps->fix_quality = (uint8_t)atoi(champs[6]);
