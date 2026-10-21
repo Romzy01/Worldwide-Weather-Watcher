@@ -1,10 +1,10 @@
 /**
  * @file    journal_sd.h
  * @brief   Enregistrement des relevés sur la carte SD via FatFs.
- *          Une ligne horodatée par relevé dans AAMMJJ_0.LOG.
- *          Fichier plein (FILE_MAX_SIZE) : il est renommé AAMMJJ_N.LOG
- *          (N = première révision libre) et l'écriture repart dans un
- *          nouveau AAMMJJ_0.LOG vide.
+ *          Une ligne horodatee par releve dans AAMMJJ00.LOG.
+ *          Fichier plein (FILE_MAX_SIZE) : il est renomme AAMMJJNN.LOG
+ *          (NN = premiere revision libre entre 01 et 99).
+ *          L'ecriture reprend dans un nouveau AAMMJJ00.LOG.
  */
 #ifndef JOURNAL_SD_H
 #define JOURNAL_SD_H

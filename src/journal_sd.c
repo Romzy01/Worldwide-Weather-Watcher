@@ -127,6 +127,13 @@ CodeErreur journal_ecrire(const Mesures *m)
     bool nouveau = (r == FR_NO_FILE);
     if (r != FR_OK && !nouveau) { demonter(); return ERR_SD_ECRITURE; }
 
+        /* Verifier que l'en-tete et la premiere mesure tiennent dans le fichier */
+    if (nouveau &&
+        strlen(SD_ENTETE) + longueur > (size_t)params.file_max_size)
+    {
+        return ERR_SD_PLEINE;
+    }
+
     r = f_open(&fichier, nom, FA_OPEN_APPEND | FA_WRITE);
     if (r == FR_DENIED) return ERR_SD_PLEINE;              /* répertoire plein */
     if (r != FR_OK) { demonter(); return ERR_SD_ECRITURE; }
