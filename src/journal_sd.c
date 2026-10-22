@@ -73,8 +73,23 @@ void journal_formater_ligne(const Mesures *m, char *ligne, uint16_t taille)
     ajouter(ligne, taille, m->temp_valide, m->env.temperature_c, 1, false);
     ajouter(ligne, taille, m->hygr_valide, m->env.humidity_percent, 1, false);
     ajouter(ligne, taille, m->lumin_valide, (float)m->luminosite, 0, false);
-    ajouter(ligne, taille, m->gps_valide, (float)m->gps.latitude, 5, false);
-    ajouter(ligne, taille, m->gps_valide, (float)m->gps.longitude, 5, true);
+   
+    /* Identifier explicitement les coordonnees GPS simulees. */
+    bool gps_simule = m->gps_valide &&
+                      strcmp(m->gps.raw_sentence, "GPS_SIMULE") == 0;
+
+    if (gps_simule && strlen(ligne) + 4 < taille)
+        strcat(ligne, "SIM:");
+
+    ajouter(ligne, taille, m->gps_valide,
+            (float)m->gps.latitude, 5, false);
+
+    if (gps_simule && strlen(ligne) + 4 < taille)
+        strcat(ligne, "SIM:");
+
+    ajouter(ligne, taille, m->gps_valide,
+            (float)m->gps.longitude, 5, true);
+
 }
 
 static void nom_fichier(char *nom, const Mesures *m, unsigned revision)

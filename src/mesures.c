@@ -119,6 +119,24 @@ static void finaliser(void)
     courant.lumin_valide = repondu[CAPTEUR_LUMIERE];
     courant.gps_valide = repondu[CAPTEUR_GPS] && courant.gps.valid;
 
+
+#ifdef GPS_DEMO_SOUTENANCE
+    /* GPS reel prioritaire. Simulation uniquement sans position valide. */
+    if (demande[CAPTEUR_GPS] && !courant.gps_valide)
+    {
+        courant.gps.latitude = 48.65183;
+        courant.gps.longitude = 6.13453;
+        courant.gps.valid = true;
+        courant.gps.fix_quality = 0;
+        courant.gps.satellites = 0;
+
+        strcpy(courant.gps.raw_sentence, "GPS_SIMULE");
+        courant.gps_valide = true;
+
+        printf("[GPS DEMO] Position simulee utilisee\r\n");
+    }
+#endif
+
     /* Erreur à afficher, de la plus prioritaire à la moins prioritaire */
     if (erreur_rtc)                                      derniere_erreur = ERR_RTC;
     else if (nb_timeouts[CAPTEUR_GPS] >= NB_TIMEOUTS_ERREUR) derniere_erreur = ERR_GPS;

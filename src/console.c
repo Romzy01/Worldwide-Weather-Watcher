@@ -11,6 +11,7 @@
 #include "stm32l4xx_hal.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 extern UART_HandleTypeDef huart2;   /* défini dans setup.c */
 
@@ -121,12 +122,22 @@ void console_afficher_mesures(const Mesures *m)
     afficher_valeur("H", m->hygr_valide, m->env.humidity_percent, 1, " %");
     if (m->lumin_valide) printf(" L=%u (%s)", m->luminosite, niveau_lumiere(m->luminosite));
     else                 printf(" L=NA");
-    if (m->gps_valide) {
-        char lat[16], lon[16];
-        texte_decimal(lat, sizeof(lat), (float)m->gps.latitude, 5);
-        texte_decimal(lon, sizeof(lon), (float)m->gps.longitude, 5);
-        printf(" GPS=%s,%s (%u sat)\r\n", lat, lon, m->gps.satellites);
+    
+
+if (m->gps_valide) {
+    char lat[16], lon[16];
+
+    texte_decimal(lat, sizeof(lat), (float)m->gps.latitude, 5);
+    texte_decimal(lon, sizeof(lon), (float)m->gps.longitude, 5);
+
+    if (strcmp(m->gps.raw_sentence, "GPS_SIMULE") == 0) {
+        printf(" GPS=%s,%s (SIMULE)\r\n", lat, lon);
     } else {
-        printf(" GPS=NA\r\n");
+        printf(" GPS=%s,%s (%u sat)\r\n",
+               lat, lon, m->gps.satellites);
     }
+} else {
+    printf(" GPS=NA\r\n");
+}
+
 }
