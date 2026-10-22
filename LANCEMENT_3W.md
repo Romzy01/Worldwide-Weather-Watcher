@@ -133,3 +133,35 @@ Pour tester l'ensemble des fonctions, utiliser une **Nucleo-L476RG** et le câbl
 ## Dépôt
 
 https://github.com/Romzy01/Worldwide-Weather-Watcher/tree/integration-capteurs
+
+hoisir la version du programme pour la soutenance
+
+Le projet Worldwide Weather Watcher (3W) possède deux versions, disponibles sur GitHub.
+
+Branche GitHub
+
+Fonctionnement
+
+integration-capteurs
+
+Version normale : utilisation du GPS réel uniquement.
+
+demo-gps-soutenance
+
+Version de démonstration : GPS réel prioritaire, coordonnées simulées si aucune position GPS n'est disponible.
+
+1. Lancer la version normale
+
+Pour utiliser la station météo avec uniquement les données GPS réelles :
+
+git switch integration-capteurs
+
+Compiler et téléverser le programme sur la STM32 :
+
+~/.platformio/penv/bin/pio run --target upload
+
+Ouvrir le moniteur série :
+
+~/.platformio/penv/bin/pio device monitor -p /dev/ttyACM0 -b 115200
+
+En l'absence de réception GPS, le programme affichera GPS=NA.

@@ -72,7 +72,7 @@ static void entrer(Mode nouveau)
     case MODE_CONFIGURATION:
         console_vider();
         afficher_aide_configuration();
-        minuteur_demarrer(&minuteur_inactivite, INACTIVITE_CONFIG_MIN * temps_minute_ms());
+        minuteur_demarrer(&minuteur_inactivite, INACTIVITE_CONFIG_MIN * 60000UL);
         break;
     case MODE_MAINTENANCE:
         journal_suspendre();                      /* la carte SD peut être retirée */
